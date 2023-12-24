@@ -19,6 +19,26 @@ const Register = () => {
       });
       return;
     }
+
+    if (password !== repeatPassword) {
+      setAlert({
+        msg: "Passwords are no equals",
+        error: true,
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setAlert({
+        msg: "The password is very small, add a minimum of 6 characters",
+        error: true,
+      });
+      return;
+    }
+
+    setAlert({});
+
+    // Create user in the API
   };
 
   const { msg } = alert;
