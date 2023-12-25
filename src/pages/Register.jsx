@@ -42,21 +42,29 @@ const Register = () => {
     // Create user in the API
 
     try {
-      const { data } = await axios.post("http://localhost:4000/api/usuarios", {
-        nombre: name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios`,
+        {
+          nombre: name,
+          email,
+          password,
+        }
+      );
 
       setAlert({
         msg: data.msg,
         error: false,
       });
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRepeatPassword("");
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
-        error: true
-      })
+        error: true,
+      });
     }
   };
 
