@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import clientAxios from "../config/clientAxios";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState("");
+
+  const {} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
