@@ -11,7 +11,7 @@ const Projects = () => {
       <div className="bg-white shadow mt-10 rounded-lg">
         {projects.length ? (
           projects.map((project) => (
-            <PreviewProject key={projects._id} project={project} />
+            <PreviewProject key={project._id} project={project} />
           ))
         ) : (
           <p className="text-center text-gray-600 uppercase p-5">
