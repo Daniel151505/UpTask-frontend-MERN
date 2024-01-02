@@ -1,11 +1,14 @@
 import { useState, useEffect, createContext } from "react";
 import clientAxios from "../config/clientAxios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsContext = createContext();
 
 const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [alert, setAlert] = useState([]);
+
+  const navigate = useNavigate();
 
   const showAlert = (alert) => {
     setAlert(alert);
@@ -16,7 +19,31 @@ const ProjectsProvider = ({ children }) => {
   };
 
   const submitProject = async (project) => {
-    console.log(project);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clientAxios.post("/proyectos", project, config);
+
+      setAlert({
+        msg: "Project Created Successfully",
+        error: false,
+      });
+
+      setTimeout(() => {
+        setAlert({});
+        navigate("/projects");
+      }, 4000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

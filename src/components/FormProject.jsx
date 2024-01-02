@@ -10,7 +10,7 @@ const FormProject = () => {
 
   const { showAlert, alert, submitProject } = useProjects;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if ([name, description, deadline, client].includes("")) {
@@ -19,11 +19,16 @@ const FormProject = () => {
         error: true,
       });
 
-      return
+      return;
     }
 
     //Pass the data to the provider
-    submitProject({name, description, deadline, client})
+    await submitProject({ name, description, deadline, client });
+
+    setName("");
+    setDescription("");
+    setDeadline("");
+    setClient("");
   };
 
   const { msg } = alert;
