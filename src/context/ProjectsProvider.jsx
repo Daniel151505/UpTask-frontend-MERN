@@ -6,12 +6,15 @@ const ProjectsContext = createContext();
 
 const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
-  const [alert, setAlert] = useState([]);
+  const [alert, setAlert] = useState({});
+  const [project, setProject] = useState({});
+  const [charging, setCharging] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getProjects = async () => {
+      setCharging(true);
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -27,6 +30,8 @@ const ProjectsProvider = ({ children }) => {
         setProjects(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setCharging(false);
       }
     };
     getProjects();
@@ -83,6 +88,7 @@ const ProjectsProvider = ({ children }) => {
       };
 
       const { data } = await clientAxios(`/proyectos/${id}`, config);
+      setProject(data);
     } catch (error) {}
   };
 
@@ -94,6 +100,8 @@ const ProjectsProvider = ({ children }) => {
         alert,
         submitProject,
         getProject,
+        project,
+        charging
       }}
     >
       {children}
