@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const PreviewProject = () => {
+const PreviewProject = ({project}) => {
   const { nombre, _id, cliente } = project;
 
   return (
@@ -8,7 +8,7 @@ const PreviewProject = () => {
       <p className="flex-1">
         {nombre}
         <span className="text-sm text-gray-500 uppercase">
-          {""}
+          {" "}
           {cliente}
         </span>
       </p>

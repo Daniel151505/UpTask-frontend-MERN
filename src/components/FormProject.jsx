@@ -8,7 +8,7 @@ const FormProject = () => {
   const [deadline, setDeadline] = useState("");
   const [client, setClient] = useState("");
 
-  const { showAlert, alert, submitProject } = useProjects;
+  const { showAlert, alert, submitProject } = useProjects();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +23,7 @@ const FormProject = () => {
     }
 
     //Pass the data to the provider
-    await submitProject({ name, description, deadline, client });
-
+    await submitProject({ nombre: name, descripcion: description, fechaEntrega: deadline, cliente: client });
     setName("");
     setDescription("");
     setDeadline("");
@@ -44,7 +43,7 @@ const FormProject = () => {
         <label
           className="text-gray-700 uppercase font-bold text-sm"
           htmlFor="name"
-        ></label>
+        >Name</label>
         <input
           id="name"
           type="text"
