@@ -86,7 +86,6 @@ const ProjectsProvider = ({ children }) => {
         setAlert({});
         navigate("/projects");
       }, 4000);
-
     } catch (error) {
       console.log(error);
     }
@@ -140,15 +139,46 @@ const ProjectsProvider = ({ children }) => {
       const { data } = await clientAxios(`/proyectos/${id}`, config);
       setProject(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      setCharging(false)
+      setCharging(false);
     }
   };
 
-  const deleteProject = async id => {
+  // Delete project
+  const deleteProject = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Deleting project
+      const { data } = clientAxios.delete(`/proyectos/${id}`, config);
+
+      // Synchronize projects
+      const updatedProjects = projects.filter(
+        (projectState) => projectState._id !== id
+      );
+      setProjects(updatedProjects);
+
+      // Show alert
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+
+      setTimeout(() => {
+        setAlert({});
+        navigate("/projects");
+      }, 4000);
+    } catch (error) {}
+  };
 
   return (
     <ProjectsContext.Provider
@@ -160,7 +190,7 @@ const ProjectsProvider = ({ children }) => {
         getProject,
         project,
         charging,
-        deleteProject
+        deleteProject,
       }}
     >
       {children}
