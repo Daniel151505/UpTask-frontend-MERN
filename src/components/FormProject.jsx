@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import Alert from "./Alert";
 
 const FormProject = () => {
-  const [name, setName] = useState("");
+  const [id, setId] = useState(null);
+  const [name, setName] = useState('');
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
   const [client, setClient] = useState("");
 
-  const { showAlert, alert, submitProject } = useProjects();
+  const params = useParams();
+  const { showAlert, alert, submitProject, project } = useProjects();
+
+  useEffect(() => {
+    if (params.id) {
+      setId(project._id)
+      setName(project.nombre);
+      setDescription(project.descripcion);
+      setDeadline(project.fechaEntrega?.split("T")[0]);
+      setClient(project.cliente);
+    }
+  }, [params]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +36,12 @@ const FormProject = () => {
     }
 
     //Pass the data to the provider
-    await submitProject({ nombre: name, descripcion: description, fechaEntrega: deadline, cliente: client });
+    await submitProject({
+      nombre: name,
+      descripcion: description,
+      fechaEntrega: deadline,
+      cliente: client,
+    });
     setName("");
     setDescription("");
     setDeadline("");
@@ -43,7 +61,9 @@ const FormProject = () => {
         <label
           className="text-gray-700 uppercase font-bold text-sm"
           htmlFor="name"
-        >Name</label>
+        >
+          Name
+        </label>
         <input
           id="name"
           type="text"
@@ -106,7 +126,7 @@ const FormProject = () => {
 
       <input
         type="submit"
-        value="Create Project"
+        value={id ? 'Update Project' : 'Create Project'}
         className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors"
       />
     </form>
