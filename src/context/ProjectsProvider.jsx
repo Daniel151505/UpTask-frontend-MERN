@@ -48,9 +48,9 @@ const ProjectsProvider = ({ children }) => {
 
   const submitProject = async (project) => {
     if (project.id) {
-      editProject(project);
+      await editProject(project);
     } else {
-      newProject(project);
+      await newProject(project);
     }
   };
 
@@ -72,6 +72,24 @@ const ProjectsProvider = ({ children }) => {
         project,
         config
       );
+
+      // Synchronize projects
+      const updatedProjects = project.map((projectState) =>
+        projectState._id === data._id ? data : projectState
+      );
+      setProject(updatedProjects);
+
+      // Show alert
+      setAlert({
+        msg: "Project Updated Successfully",
+        error: false,
+      });
+
+      setTimeout(() => {
+        setAlert({});
+        navigate("/projects");
+      }, 4000);
+
     } catch (error) {
       console.log(error);
     }
