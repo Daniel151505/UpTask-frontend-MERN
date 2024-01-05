@@ -12,6 +12,7 @@ const ProjectsProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  // Obtain all the projects
   useEffect(() => {
     const getProjects = async () => {
       setCharging(true);
@@ -46,6 +47,38 @@ const ProjectsProvider = ({ children }) => {
   };
 
   const submitProject = async (project) => {
+    if (project.id) {
+      editProject(project);
+    } else {
+      newProject(project);
+    }
+  };
+
+  //Edit project
+  const editProject = async (project) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clientAxios.put(
+        `/proyectos/${project.id}`,
+        project,
+        config
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //Create new project
+  const newProject = async (project) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -75,6 +108,7 @@ const ProjectsProvider = ({ children }) => {
     }
   };
 
+  //Obtain only one project
   const getProject = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -101,7 +135,7 @@ const ProjectsProvider = ({ children }) => {
         submitProject,
         getProject,
         project,
-        charging
+        charging,
       }}
     >
       {children}

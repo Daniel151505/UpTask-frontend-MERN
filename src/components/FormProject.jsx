@@ -5,7 +5,7 @@ import Alert from "./Alert";
 
 const FormProject = () => {
   const [id, setId] = useState(null);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
   const [client, setClient] = useState("");
@@ -15,7 +15,7 @@ const FormProject = () => {
 
   useEffect(() => {
     if (params.id) {
-      setId(project._id)
+      setId(project._id);
       setName(project.nombre);
       setDescription(project.descripcion);
       setDeadline(project.fechaEntrega?.split("T")[0]);
@@ -37,11 +37,14 @@ const FormProject = () => {
 
     //Pass the data to the provider
     await submitProject({
+      id,
       nombre: name,
       descripcion: description,
       fechaEntrega: deadline,
       cliente: client,
     });
+
+    setId(null);
     setName("");
     setDescription("");
     setDeadline("");
@@ -126,7 +129,7 @@ const FormProject = () => {
 
       <input
         type="submit"
-        value={id ? 'Update Project' : 'Create Project'}
+        value={id ? "Update Project" : "Create Project"}
         className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors"
       />
     </form>
