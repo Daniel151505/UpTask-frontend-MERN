@@ -15,7 +15,6 @@ const ProjectsProvider = ({ children }) => {
   // Obtain all the projects
   useEffect(() => {
     const getProjects = async () => {
-      setCharging(true);
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -31,8 +30,6 @@ const ProjectsProvider = ({ children }) => {
         setProjects(data);
       } catch (error) {
         console.log(error);
-      } finally {
-        setCharging(false);
       }
     };
     getProjects();
@@ -128,6 +125,7 @@ const ProjectsProvider = ({ children }) => {
 
   //Obtain only one project
   const getProject = async (id) => {
+    setCharging(true);
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -141,8 +139,16 @@ const ProjectsProvider = ({ children }) => {
 
       const { data } = await clientAxios(`/proyectos/${id}`, config);
       setProject(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setCharging(false)
+    }
   };
+
+  const deleteProject = async id => {
+
+  }
 
   return (
     <ProjectsContext.Provider
@@ -154,6 +160,7 @@ const ProjectsProvider = ({ children }) => {
         getProject,
         project,
         charging,
+        deleteProject
       }}
     >
       {children}
