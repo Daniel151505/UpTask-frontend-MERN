@@ -5,7 +5,7 @@ import TaskFormModal from "../components/TaskFormModal";
 
 const Project = () => {
   const params = useParams();
-  const { getProject, project, charging } = useProjects();
+  const { getProject, project, charging, handleTaskModal } = useProjects();
 
   const [modal, setModal] = useState(false);
 
@@ -46,7 +46,7 @@ const Project = () => {
         </div>
 
         <button
-          onClick={() => setModal(true)}
+          onClick={handleTaskModal}
           type="button"
           className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center"
         >

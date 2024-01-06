@@ -1,13 +1,16 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import useProjects from "../hooks/useProjects";
 
-const TaskFormModal = ({ modal, setModal }) => {
+const TaskFormModal = () => {
+  const { taskFormModal, handleTaskFormModal } = useProjects();
+
   return (
-    <Transition.Root show={modal} as={Fragment}>
+    <Transition.Root show={taskFormModal} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
-        onClose={() => setModal(false)}
+        onClose={handleTaskFormModal}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -44,7 +47,7 @@ const TaskFormModal = ({ modal, setModal }) => {
                 <button
                   type="button"
                   className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={() => setModal(false)}
+                  onClick={handleTaskFormModal}
                 >
                   <span className="sr-only">Close</span>
                   <svg
