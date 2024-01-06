@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 const PreviewProject = ({project}) => {
   const { nombre, _id, cliente } = project;
 
+  console.log(project, 'ioio')
+
   return (
     <div className="border-b p-5 flex">
       <p className="flex-1">

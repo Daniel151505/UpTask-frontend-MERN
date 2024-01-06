@@ -70,11 +70,14 @@ const ProjectsProvider = ({ children }) => {
         config
       );
 
+      console.log(data,'perra puta')
       // Synchronize projects
-      const updatedProjects = project.map((projectState) =>
+      const updatedProjects = projects.map((projectState) =>
         projectState._id === data._id ? data : projectState
       );
-      setProject(updatedProjects);
+
+      console.log(updatedProjects, 'sopita')
+      setProjects(updatedProjects);
 
       // Show alert
       setAlert({
@@ -93,6 +96,7 @@ const ProjectsProvider = ({ children }) => {
 
   //Create new project
   const newProject = async (project) => {
+    console.log(project)
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -159,24 +163,29 @@ const ProjectsProvider = ({ children }) => {
       };
 
       // Deleting project
-      const { data } = clientAxios.delete(`/proyectos/${id}`, config);
+      const { data } = await clientAxios.delete(`/proyectos/${id}`, config);
 
       // Synchronize projects
       const updatedProjects = projects.filter(
         (projectState) => projectState._id !== id
       );
-      setProjects(updatedProjects);
+      setProjects(updatedProjects)
 
+      console.log(updatedProjects)
       // Show alert
       setAlert({
         msg: data.msg,
         error: false,
       });
 
+      console.log('hola')
+
       setTimeout(() => {
         setAlert({});
         navigate("/projects");
       }, 4000);
+
+      console.log('zorra')
     } catch (error) {}
   };
 
