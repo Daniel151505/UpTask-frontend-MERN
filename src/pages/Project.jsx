@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
+import TaskFormModal from "../components/TaskFormModal";
 
 const Project = () => {
   const params = useParams();
@@ -62,6 +63,8 @@ const Project = () => {
           </svg>
           New Task
         </button>
+
+        <TaskFormModal />
       </div>
     </>
   );
