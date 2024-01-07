@@ -194,6 +194,10 @@ const ProjectsProvider = ({ children }) => {
     setTaskFormModal(!taskFormModal)
   }
 
+  const submitTask = async task => {
+
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -206,7 +210,8 @@ const ProjectsProvider = ({ children }) => {
         charging,
         deleteProject,
         taskFormModal,
-        handleTaskModal
+        handleTaskModal,
+        submitTask
       }}
     >
       {children}
