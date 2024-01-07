@@ -2,7 +2,13 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useProjects from "../hooks/useProjects";
 
+const PRIORITY = ["Low", "Medium", "High"];
+
 const TaskFormModal = () => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
+
   const { taskFormModal, handleTaskFormModal } = useProjects();
 
   return (
@@ -70,7 +76,68 @@ const TaskFormModal = () => {
                   <Dialog.Title
                     as="h3"
                     className="text-lg leading-6 font-bold text-gray-900"
-                  ></Dialog.Title>
+                  >
+                    New Task
+                  </Dialog.Title>
+                  <form className="my-10">
+                    <div className="mb-5">
+                      <label
+                        htmlFor="name"
+                        className="text-gray-700 uppercase font-bold text-sm"
+                      >
+                        Task Name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        placeholder="Enter the task name"
+                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-5">
+                      <label
+                        htmlFor="description"
+                        className="text-gray-700 uppercase font-bold text-sm"
+                      >
+                        Task Description
+                      </label>
+                      <textarea
+                        id="description"
+                        type="text"
+                        placeholder="Enter the task description"
+                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-5">
+                      <label
+                        htmlFor="priority"
+                        className="text-gray-700 uppercase font-bold text-sm"
+                      >
+                        Priority
+                      </label>
+                      <select
+                        id="priority"
+                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                      >
+                        <option value="">-- Select --</option>
+                        {PRIORITY.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      type="submit"
+                      className="bg-sky-600 hover:bg-sky-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm"
+                      value="Create Task"
+                    />
+                  </form>
                 </div>
               </div>
             </div>
@@ -81,4 +148,4 @@ const TaskFormModal = () => {
   );
 };
 
-export default ModalFormularioTarea;
+export default TaskFormModal;
