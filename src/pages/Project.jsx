@@ -86,6 +86,11 @@ const Project = () => {
           )}
         </div>
 
+        <div className="flex items-center justify-between mt-10">
+          <p className="font-bold text-xl">Collaborators</p>
+          <Link to={`/projects/new-collaborator/${project._id}`} className="text-gray-400 hover:text-black uppercase font-bold"></Link>
+        </div>
+
         <TaskFormModal />
         <DeleteTaskModal />
       </div>
