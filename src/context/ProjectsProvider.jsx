@@ -240,6 +240,11 @@ const ProjectsProvider = ({ children }) => {
         config
       );
 
+      const updatedProject = { ...project };
+      updatedProject.tareas = updatedProject.tareas.map((taskState) =>
+        taskState._id === data._id ? data : taskState
+      );
+      setProject(updatedProject);
       setAlert({});
       setTaskFormModal(false);
     } catch (error) {
