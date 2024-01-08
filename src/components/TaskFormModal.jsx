@@ -2,13 +2,17 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useProjects from "../hooks/useProjects";
 import Alert from "./Alert";
+import { useParams } from "react-router-dom";
 
 const PRIORITY = ["Low", "Medium", "High"];
 
 const TaskFormModal = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
   const [priority, setPriority] = useState("");
+
+  const params = useParams();
 
   const { taskFormModal, handleTaskFormModal, showAlert, alert, submitTask } =
     useProjects();
@@ -16,7 +20,7 @@ const TaskFormModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if ([name, description, priority].includes("")) {
+    if ([name, description, deadline, priority].includes("")) {
       showAlert({
         msg: "All the fields are required",
         error: true,
@@ -24,7 +28,7 @@ const TaskFormModal = () => {
       return;
     }
 
-    submitTask({ name, description, priority });
+    submitTask({ name, description, deadline, priority, project:params.id });
   };
 
   const { msg } = alert;
@@ -135,6 +139,21 @@ const TaskFormModal = () => {
                     </div>
                     <div className="mb-5">
                       <label
+                        htmlFor="deadline"
+                        className="text-gray-700 uppercase font-bold text-sm"
+                      >
+                        Deadline
+                      </label>
+                      <input
+                        id="deadline"
+                        type="date"
+                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={deadline}
+                        onChange={(e) => setDeadline(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-5">
+                      <label
                         htmlFor="priority"
                         className="text-gray-700 uppercase font-bold text-sm"
                       >
@@ -152,7 +171,6 @@ const TaskFormModal = () => {
                         ))}
                       </select>
                     </div>
-
                     <input
                       type="submit"
                       className="bg-sky-600 hover:bg-sky-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm"
