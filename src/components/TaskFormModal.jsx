@@ -14,8 +14,16 @@ const TaskFormModal = () => {
 
   const params = useParams();
 
-  const { taskFormModal, handleTaskFormModal, showAlert, alert, submitTask } =
-    useProjects();
+  const {
+    taskFormModal,
+    handleTaskFormModal,
+    showAlert,
+    alert,
+    submitTask,
+    task,
+  } = useProjects();
+
+  useEffect(() => {}, [task]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
