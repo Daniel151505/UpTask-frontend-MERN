@@ -9,7 +9,7 @@ const ProjectsProvider = ({ children }) => {
   const [alert, setAlert] = useState({});
   const [project, setProject] = useState({});
   const [charging, setCharging] = useState(false);
-  const [taskFormModal, setTaskFormModal] = useState(false)
+  const [taskFormModal, setTaskFormModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -71,13 +71,11 @@ const ProjectsProvider = ({ children }) => {
         config
       );
 
-      console.log(data,'perra puta')
       // Synchronize projects
       const updatedProjects = projects.map((projectState) =>
         projectState._id === data._id ? data : projectState
       );
 
-      console.log(updatedProjects, 'sopita')
       setProjects(updatedProjects);
 
       // Show alert
@@ -97,7 +95,6 @@ const ProjectsProvider = ({ children }) => {
 
   //Create new project
   const newProject = async (project) => {
-    console.log(project)
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -170,31 +167,26 @@ const ProjectsProvider = ({ children }) => {
       const updatedProjects = projects.filter(
         (projectState) => projectState._id !== id
       );
-      setProjects(updatedProjects)
+      setProjects(updatedProjects);
 
-      console.log(updatedProjects)
       // Show alert
       setAlert({
         msg: data.msg,
         error: false,
       });
 
-      console.log('hola')
-
       setTimeout(() => {
         setAlert({});
         navigate("/projects");
       }, 4000);
-
-      console.log('zorra')
     } catch (error) {}
   };
 
   const handleTaskModal = () => {
-    setTaskFormModal(!taskFormModal)
-  }
+    setTaskFormModal(!taskFormModal);
+  };
 
-  const submitTask = async task => {
+  const submitTask = async (task) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -206,11 +198,19 @@ const ProjectsProvider = ({ children }) => {
         },
       };
 
-      const { data } = await clientAxios.post('/tareas', task, config)
+      const { data } = await clientAxios.post("/tareas", task, config);
+
+      // Add the task to the state
+      const updatedProject = { ...project };
+      updatedProject.tareas = [...project.tareas, data];
+
+      setProject(updatedProject);
+      setAlert({});
+      setTaskFormModal(false);
     } catch (error) {
-      
+      console.log(error);
     }
-  }
+  };
 
   return (
     <ProjectsContext.Provider
@@ -225,7 +225,7 @@ const ProjectsProvider = ({ children }) => {
         deleteProject,
         taskFormModal,
         handleTaskModal,
-        submitTask
+        submitTask,
       }}
     >
       {children}
