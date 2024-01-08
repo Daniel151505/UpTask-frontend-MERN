@@ -52,6 +52,7 @@ const TaskFormModal = () => {
     }
 
     await submitTask({
+      id,
       nombre: name,
       descripcion: description,
       fechaEntrega: deadline,
@@ -59,6 +60,7 @@ const TaskFormModal = () => {
       proyecto: params.id,
     });
 
+    setId("")
     setName("");
     setDescription("");
     setDeadline("");

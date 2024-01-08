@@ -189,6 +189,14 @@ const ProjectsProvider = ({ children }) => {
   };
 
   const submitTask = async (task) => {
+    if (task?.id) {
+      await editTask(task);
+    } else {
+      await createTask(task);
+    }
+  };
+
+  const createTask = async (task) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -207,6 +215,31 @@ const ProjectsProvider = ({ children }) => {
       updatedProject.tareas = [...project.tareas, data];
 
       setProject(updatedProject);
+      setAlert({});
+      setTaskFormModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editTask = async (task) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clientAxios.put(
+        `/tareas/${task.id}`,
+        task,
+        config
+      );
+
       setAlert({});
       setTaskFormModal(false);
     } catch (error) {
