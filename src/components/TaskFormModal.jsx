@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 const PRIORITY = ["Low", "Medium", "High"];
 
 const TaskFormModal = () => {
+  const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -23,7 +24,21 @@ const TaskFormModal = () => {
     task,
   } = useProjects();
 
-  useEffect(() => {}, [task]);
+  useEffect(() => {
+    if (tarea?._id) {
+      setId(task._id);
+      setName(task.nombre);
+      setDescription(task.descripcion);
+      setDeadline(tarea.fechaEntrega?.split("T")[0]);
+      setPriority(task.prioridad);
+      return;
+    }
+    setId("");
+    setName("");
+    setDescription("");
+    setDeadline("");
+    setPriority("");
+  }, [task]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,11 +52,11 @@ const TaskFormModal = () => {
     }
 
     await submitTask({
-      name,
-      description,
-      deadline,
-      priority,
-      project: params.id,
+      nombre: name,
+      descripcion: description,
+      fechaEntrega: deadline,
+      prioridad: priority,
+      proyecto: params.id,
     });
 
     setName("");
@@ -118,7 +133,7 @@ const TaskFormModal = () => {
                     as="h3"
                     className="text-lg leading-6 font-bold text-gray-900"
                   >
-                    New Task
+                    {id ? "Edit Task" : "Create New Task"}
                   </Dialog.Title>
 
                   {msg && <Alert alert={alert} />}
@@ -193,7 +208,7 @@ const TaskFormModal = () => {
                     <input
                       type="submit"
                       className="bg-sky-600 hover:bg-sky-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm"
-                      value="Create Task"
+                      value={id ? "Save Changes" : "Create Task"}
                     />
                   </form>
                 </div>

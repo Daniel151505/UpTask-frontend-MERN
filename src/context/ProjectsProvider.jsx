@@ -185,6 +185,7 @@ const ProjectsProvider = ({ children }) => {
 
   const handleTaskModal = () => {
     setTaskFormModal(!taskFormModal);
+    setTask({});
   };
 
   const submitTask = async (task) => {
