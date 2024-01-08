@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import TaskFormModal from "../components/TaskFormModal";
+import Task from "../components/Task";
 
 const Project = () => {
   const params = useParams();
@@ -66,6 +67,16 @@ const Project = () => {
           </svg>
           New Task
         </button>
+
+        <p className="font-bold text-xl mt-10">Project Tasks</p>
+
+        <div className="bg-white shadow mt-10 rounded-lg">
+          {project.tareas.length ? (
+            project.tareas?.map((task) => <Task key={task._id} task={task} />)
+          ) : (
+            <p>There are no tasks in this project</p>
+          )}
+        </div>
 
         <TaskFormModal modal={modal} setModal={setModal} />
       </div>
