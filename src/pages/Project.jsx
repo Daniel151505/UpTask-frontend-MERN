@@ -4,6 +4,7 @@ import useProjects from "../hooks/useProjects";
 import TaskFormModal from "../components/TaskFormModal";
 import DeleteTaskModal from "../components/DeleteTaskModal";
 import Task from "../components/Task";
+import Alert from "../components/Alert";
 
 const Project = () => {
   const params = useParams();
@@ -16,6 +17,8 @@ const Project = () => {
   const { nombre } = project;
 
   if (charging) return "...Charging";
+
+  const { msg } = alert;
 
   return (
     <>
@@ -68,6 +71,12 @@ const Project = () => {
         </button>
 
         <p className="font-bold text-xl mt-10">Project Tasks</p>
+
+        <div className="flex justify-center">
+          <div className="w-full md:w-1/3 lg:w-1/4">
+            {msg && <Alert alert={alert} />}
+          </div>
+        </div>
 
         <div className="bg-white shadow mt-10 rounded-lg">
           {project.tareas.length ? (
