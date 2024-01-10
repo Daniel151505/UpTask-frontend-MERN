@@ -330,6 +330,10 @@ const ProjectsProvider = ({ children }) => {
     }
   };
 
+  const addCollaborator = async email => {
+
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -350,6 +354,8 @@ const ProjectsProvider = ({ children }) => {
         handleDeleteTaskModal,
         deleteTask,
         submitCollaborator,
+        collaborator,
+        addCollaborator
       }}
     >
       {children}
