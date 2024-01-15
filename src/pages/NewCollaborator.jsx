@@ -4,15 +4,21 @@ import useProjects from "../hooks/useProjects";
 import { useParams } from "react-router-dom";
 
 const NewCollaborator = () => {
-  const { getProject, project, charging, collaborator, addCollaborator } =
-    useProjects();
+  const {
+    getProject,
+    project,
+    charging,
+    collaborator,
+    addCollaborator,
+    alert,
+  } = useProjects();
   const params = useParams();
 
   useEffect(() => {
     getProject(params.id);
   }, []);
 
-  if (charging) return "charging...";
+  if (!project?._id) return <Alert alert={alert} />;
 
   return (
     <>
