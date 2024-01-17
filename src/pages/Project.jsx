@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import TaskFormModal from "../components/TaskFormModal";
 import DeleteTaskModal from "../components/DeleteTaskModal";
+import DeleteCollaboratorModal from "../components/DeleteCollaboratorModal";
 import Task from "../components/Task";
 import Alert from "../components/Alert";
 import Collaborator from "./Collaborator";
@@ -116,6 +117,7 @@ const Project = () => {
 
         <TaskFormModal />
         <DeleteTaskModal />
+        <DeleteCollaboratorModal />
       </div>
     </>
   );
