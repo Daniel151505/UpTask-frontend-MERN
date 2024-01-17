@@ -5,6 +5,7 @@ import TaskFormModal from "../components/TaskFormModal";
 import DeleteTaskModal from "../components/DeleteTaskModal";
 import Task from "../components/Task";
 import Alert from "../components/Alert";
+import Collaborator from "./Collaborator";
 
 const Project = () => {
   const params = useParams();
@@ -79,16 +80,38 @@ const Project = () => {
         </div>
 
         <div className="bg-white shadow mt-10 rounded-lg">
-          {project.tareas.length ? (
+          {project.tareas?.length ? (
             project.tareas?.map((task) => <Task key={task._id} task={task} />)
           ) : (
-            <p>There are no tasks in this project</p>
+            <p className="text-center my-5 p-10">
+              There are no tasks in this project
+            </p>
           )}
         </div>
 
         <div className="flex items-center justify-between mt-10">
           <p className="font-bold text-xl">Collaborators</p>
-          <Link to={`/projects/new-collaborator/${project._id}`} className="text-gray-400 hover:text-black uppercase font-bold"></Link>
+          <Link
+            to={`/projects/new-collaborator/${project._id}`}
+            className="text-gray-400 hover:text-black uppercase font-bold"
+          >
+            Add
+          </Link>
+        </div>
+
+        <div className="bg-white shadow mt-10 rounded-lg">
+          {project.colaboradores?.length ? (
+            project.colaboradores?.map((collaborator) => (
+              <Collaborator
+                key={collaborator._id}
+                collaborator={collaborator}
+              />
+            ))
+          ) : (
+            <p className="text-center my-5 p-10">
+              There are no collaborators in this project
+            </p>
+          )}
         </div>
 
         <TaskFormModal />
