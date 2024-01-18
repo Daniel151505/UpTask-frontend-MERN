@@ -368,12 +368,44 @@ const ProjectsProvider = ({ children }) => {
 
   const handleDeleteCollaboratorModal = () => {
     setDeleteCollaboratorModal(!deleteCollaboratorModal);
-    setCollaborator(collaborator)
+    setCollaborator(collaborator);
   };
 
-  const deleteCollaborator = () => {
+  const deleteCollaborator = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clientAxios.post(
+        `/projects/deleted-collaborator/${project._id}`,
+        { id: collaborator._id },
+        config
+      );
+
+      const updatedProject = { ...project };
+
+      updatedProject.colaboradores = updatedProject.colaboradores.filter(
+        (collaboratorState) => collaboratorState._id !== collaborator._id
+      );
+
+      setProject(updatedProject)
+
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+
+      setCollaborator({});
+      setDeleteCollaboratorModal(false)
+    } catch (error) {}
+  };
 
   return (
     <ProjectsContext.Provider
@@ -399,7 +431,7 @@ const ProjectsProvider = ({ children }) => {
         addCollaborator,
         handleDeleteCollaboratorModal,
         deleteCollaboratorModal,
-        deleteCollaborator
+        deleteCollaborator,
       }}
     >
       {children}
