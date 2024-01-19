@@ -10,7 +10,7 @@ import Collaborator from "./Collaborator";
 
 const Project = () => {
   const params = useParams();
-  const { getProject, project, charging, handleTaskModal } = useProjects();
+  const { getProject, project, charging, handleTaskModal, alert } = useProjects();
 
   useEffect(() => {
     getProject(params.id);
@@ -22,7 +22,9 @@ const Project = () => {
 
   const { msg } = alert;
 
-  return (
+  return msg && alert.error ? (
+    <Alert alert={alert} />
+  ) : (
     <>
       <div className="flex justify-between">
         <h1 className="font-black text-4xl">{nombre}</h1>
