@@ -1,8 +1,10 @@
 import { formatDate } from "../helpers/formatDate";
+import useAdmin from "../hooks/useAdmin";
 import useProjects from "../hooks/useProjects";
 
 const Task = ({ task }) => {
   const { handleEditTaskModal, handleDeleteTaskModal } = useProjects();
+  const admin = useAdmin();
   const { descripcion, nombre, prioridad, fechaEntrega, estado, _id } = task;
 
   return (
@@ -15,13 +17,14 @@ const Task = ({ task }) => {
       </div>
 
       <div className="flex gap-2">
-        <button
-          className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-          onClick={() => handleEditTaskModal(task)}
-        >
-          Edit
-        </button>
-
+        {admin && (
+          <button
+            className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+            onClick={() => handleEditTaskModal(task)}
+          >
+            Edit
+          </button>
+        )}
         {estado ? (
           <button className="bg-sky-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
             Complete
@@ -32,12 +35,14 @@ const Task = ({ task }) => {
           </button>
         )}
 
-        <button
-          className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-          onClick={() => handleDeleteTaskModal(task)}
-        >
-          Delete
-        </button>
+        {admin && (
+          <button
+            className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+            onClick={() => handleDeleteTaskModal(task)}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
