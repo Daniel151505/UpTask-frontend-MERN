@@ -416,6 +416,24 @@ const ProjectsProvider = ({ children }) => {
     } catch (error) {}
   };
 
+  const completeTask = async id => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const {data} = clientAxios.post(`/tareas/estado/${id}`, {}, config)
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <ProjectsContext.Provider
       value={{

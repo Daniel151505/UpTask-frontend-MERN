@@ -3,7 +3,8 @@ import useAdmin from "../hooks/useAdmin";
 import useProjects from "../hooks/useProjects";
 
 const Task = ({ task }) => {
-  const { handleEditTaskModal, handleDeleteTaskModal } = useProjects();
+  const { handleEditTaskModal, handleDeleteTaskModal, completeTask } =
+    useProjects();
   const admin = useAdmin();
   const { descripcion, nombre, prioridad, fechaEntrega, estado, _id } = task;
 
@@ -25,15 +26,14 @@ const Task = ({ task }) => {
             Edit
           </button>
         )}
-        {estado ? (
-          <button className="bg-sky-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
-            Complete
-          </button>
-        ) : (
-          <button className="bg-gray-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
-            Incomplete
-          </button>
-        )}
+        <button
+          className={`${
+            estado ? "bg-sky-600" : "bg-gray-600"
+          } px-4 py-3 text-white uppercase font-bold text-sm rounded-lg`}
+          onClick={() => completeTask(_id)}
+        >
+          {estado ? "Complete" : "Incomplete"}
+        </button>
 
         {admin && (
           <button
