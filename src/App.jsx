@@ -1,57 +1,52 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import AuthLayout from "./layouts/AuthLayout";
-import ProtectedRoute from "./layouts/ProtectedRoute";
+import AuthLayout from './layouts/AuthLayout'
+import RutaProtegida from './layouts/RutaProtegida'
 
-//Pages
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ForgotPassword from "./pages/ForgotPassword";
-import NewPassword from "./pages/NewPassword";
-import ConfirmAccount from "./pages/ConfirmAccount";
-import Projects from "./pages/Projects";
-import NewProject from "./pages/NewProject";
-import Project from "./pages/Project";
-import EditProject from "./pages/EditProject";
-import NewCollaborator from "./pages/NewCollaborator";
+import Login from './paginas/Login'
+import Registrar from './paginas/Registrar'
+import OlvidePassword from './paginas/OlvidePassword'
+import NuevoPassword from './paginas/NuevoPassword'
+import ConfirmarCuenta from './paginas/ConfirmarCuenta'
+import Proyectos from './paginas/Proyectos'
+import NuevoProyecto from './paginas/NuevoProyecto'
+import Proyecto from './paginas/Proyecto'
+import EditarProyecto from './paginas/EditarProyecto'
+import NuevoColaborador from './paginas/NuevoColaborador'
 
-import { AuthProvider } from "./context/AuthProvider";
-import { ProjectsProvider } from "./context/ProjectsProvider";
+import {AuthProvider} from './context/AuthProvider'
+import {ProyectosProvider} from './context/ProyectosProvider'
+
+
 
 function App() {
+
+
   return (
-    <>
-      <BrowserRouter>
-        <AuthProvider>
-          <ProjectsProvider>
-            <Routes>
+    <BrowserRouter>
+      <AuthProvider>
+        <ProyectosProvider>
+          <Routes>
               <Route path="/" element={<AuthLayout />}>
-                <Route index element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route path="forgot-password" element={<ForgotPassword />} />
-                <Route
-                  path="forgot-password/:token"
-                  element={<NewPassword />}
-                />
-                <Route
-                  path="confirm-account/:id"
-                  element={<ConfirmAccount />}
-                />
+                  <Route index element={<Login />} />
+                  <Route path="register" element={<Registrar />} />
+                  <Route path="forgot-password" element={<OlvidePassword />} />
+                  <Route path="forgot-password/:token" element={<NuevoPassword />} />
+                  <Route path="confirm/:id" element={<ConfirmarCuenta />} />
               </Route>
 
-              <Route path="/projects" element={<ProtectedRoute />}>
-                <Route index element={<Projects />} />
-                <Route path="new-project" element={<NewProject />} />
-                <Route path="new-collaborator/:id" element={<NewCollaborator />} />
-                <Route path=":id" element={<Project />} />
-                <Route path="edit/:id" element={<EditProject />} />
+              <Route path="/projects" element={<RutaProtegida />}>
+                  <Route index element={<Proyectos />} />
+                  <Route path="add-project" element={<NuevoProyecto />} />
+                  <Route path="add-collaborator/:id" element={<NuevoColaborador />} />
+                  <Route path=":id" element={<Proyecto />} />
+                  <Route path="edit/:id" element={<EditarProyecto />} />
               </Route>
-            </Routes>
-          </ProjectsProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </>
-  );
+          </Routes>
+        </ProyectosProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
